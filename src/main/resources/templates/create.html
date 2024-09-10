@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Person</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <h2>Create Person</h2>
+  <form id="personForm" th:object="${RPerson}" th:action="@{/report/createService}" method="post">
+
+
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="name" name="name" th:field="*{name}"  >
+    </div>
+    <div class="form-group">
+      <label for="surname">Surname:</label>
+      <input type="text" class="form-control" id="surname" name="surname" th:field="*{surname}" >
+    </div>
+    <div class="form-group">
+      <label for="disease">Disease:</label>
+      <select  class="form-control" id="disease" name="disease" th:field="*{hastalikTuru}" >
+        <option value="Diyabet">Diyabet</option>
+        <option value="HiperTansiyon">HiperTansiyon</option>
+        <option value="Kolestrol">Kolestrol</option>
+        <option value="Obezite">Obezite</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+  </form>
+</div>
+</body>
+</html>

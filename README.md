@@ -42,3 +42,8 @@ Uygulama çalıştırıldığında:
 ## Sonuç
 
 Bu proje, hastane ile ilgili verileri verimli, ölçeklenebilir ve yönetilebilir bir sistem sunmak üzere yapılandırılmıştır. Spring Boot ve Neo4j kombinasyonu, karmaşık veri ilişkilerini hızlı bir şekilde yönetirken kolay geliştirme imkanı sağlar.
+
+##Katkı sağlayanlar
+-/hbykl
+-/z-muhammet
+-/oykuatakk

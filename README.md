@@ -45,6 +45,6 @@ Bu proje, hastane ile ilgili verileri verimli, ölçeklenebilir ve yönetilebili
 
 
 ## Katkı sağlayanlar
--/hbykl
--/z-muhammet
--/oykuatakk
+- /hbykl
+- /z-muhammet
+- /oykuatakk

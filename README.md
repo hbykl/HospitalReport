@@ -1,50 +1,85 @@
-# Hastane Rapor Uygulaması
+# Hospital Report Management System
 
-## Genel Bakış
+Hospital Report is a Spring Boot 3 application that demonstrates how to manage people and their medical reports using a Neo4j graph database. It exposes simple REST endpoints and HTML views for creating, updating and listing people with their associated reports.
 
-Bu proje, hastane içindeki kişisel ve tıbbi kayıtların yönetimini ve işlenmesini sağlamak için tasarlanmış bir Hastane Rapor Yönetim sistemidir. Sistem, backend geliştirme için Spring Boot kullanılarak oluşturulmuş ve grafik tabanlı ilişkileri yönetmek için Neo4j veritabanını kullanmaktadır.
+## Features
 
-### Kullanılan Başlıca Teknolojiler
+- CRUD operations for persons and medical reports
+- Neo4j integration via Spring Data Neo4j
+- HTML templates rendered with Thymeleaf
+- RESTful API design for programmatic access
 
-- **Spring Boot**: Web uygulamalarının geliştirilmesini kolaylaştıran ve hazır yapılandırmalar sunan Java tabanlı bir framework.
-- **Neo4j**: Karmaşık veri ilişkilerini verimli bir şekilde depolayan ve sorgulayan bir NoSQL grafik veritabanı.
-- **Spring Data Neo4j**: Spring Boot ile Neo4j entegrasyonunu kolaylaştırır, veri işlemlerini yönetmeyi sağlar.
-- **RESTful API Tasarımı**: Sisteme etkileşimli erişim sağlamak için CRUD işlemleri sunan RESTful uç noktalar.
+## Project Structure
 
-## Proje Yapısı ve Ana Bileşenler
+```
+src/
+ ├─ main/
+ │  ├─ java/com/hm/HospitalReport/       # Java source code
+ │  └─ resources/templates/               # Thymeleaf templates
+ └─ test/java/com/hm/HospitalReport/      # Tests
+```
 
-- **HospitalReportApplication.java**: Uygulamanın ana giriş noktası. Spring Boot uygulamasını başlatır.
-- **Persons.java**: Neo4j veritabanında bir kişi varlığını temsil eden model sınıfı. Bu sınıf, grafikte bir düğüm olarak tanımlanmak için `@Node` anotasyonunu kullanır.
-- **RelotionShip.java**: Kişiler arasındaki ilişkileri temsil eden ve hastalık türü gibi özellikleri depolayan sınıf.
-- **Report.java**: Neo4j veritabanında bir tıbbi raporu temsil eden model sınıfı.
-- **ReportRepository.java**: `Neo4jRepository` arayüzünü genişleten ve `Report` verilerini sorgulamak için yöntemler sağlayan repository arayüzü.
-- **RepositoryPerson.java**: `ReportRepository` benzeri bir yapı ile, `Persons` varlıklarını yönetir.
-- **Controller.java**: API isteklerini yönetir ve gerekli hizmetlere yönlendirir.
-- **DBController.java**: Rapor güncelleme veya raporları alma gibi veritabanı ile ilgili işlemleri yönetir.
+Key classes:
+- `HospitalReportApplication` – application entry point
+- `Persons`, `Report`, `RelotionShip` – domain models
+- `Controller`, `DBController` – web controllers
+- `RepositoryPerson`, `ReportRepository` – Spring Data repositories
 
-## Ana Tasarım Kararları
+## Requirements
 
-1. **Framework Seçimi**: Spring Boot, kullanım kolaylığı, hızlı geliştirme yetenekleri ve kurumsal düzeyde uygulamaları destekleyen geniş ekosistemi nedeniyle seçildi.
-2. **Veritabanı Seçimi**: Neo4j, kişiler ve bunlara bağlı tıbbi kayıtlar gibi veri varlıkları arasındaki karmaşık ilişkileri verimli bir şekilde yönetebilmesi nedeniyle tercih edildi.
-3. **Repository Deseni**: Veri erişim katmanını soyutlamak ve veriyi yönetmek için Spring Data Neo4j kullanıldı.
-4. **RESTful API**: İstemci ve sunucu arasında açık, durumsuz bir iletişim protokolü sağlamak için standart RESTful mimarisi kullanıldı.
+- Java 17 or higher
+- Maven 3.8+
+- A running Neo4j instance (default: `bolt://localhost:7687`)
 
-## Çalışma Şekli
+## Setup
 
-Uygulama çalıştırıldığında:
+Clone the repository and build the project:
 
-1. **Başlatma**: Spring Boot uygulamayı başlatır, gerekli tüm yapılandırmaları ve bileşenleri kurar.
-2. **Veritabanı Bağlantısı**: Uygulama, bir Neo4j veritabanı örneğine bağlanır ve istekleri karşılamaya hazır hale getirir.
-3. **API Uç Noktaları**: RESTful API uç noktaları, istemcilerin sistemle etkileşime geçmesine olanak tanır, veri kaydı, okuma, güncelleme ve silme işlemleri yapılabilir.
-4. **Veri İşleme**: Gelen bir istek, uygun kontrolör tarafından işlenir ve gerekli veri tabanı işlemleri gerçekleştirilir.
-5. **Yanıt Yönetimi**: Her işlemin sonucu, veri alma, güncelleme onayı veya hata mesajları gibi istemciye geri döner.
+```bash
+git clone <repo-url>
+cd HospitalReport
+mvn clean package
+```
 
-## Sonuç
+Configure Neo4j credentials in `src/main/resources/application.properties` or via environment variables:
 
-Bu proje, hastane ile ilgili verileri verimli, ölçeklenebilir ve yönetilebilir bir sistem sunmak üzere yapılandırılmıştır. Spring Boot ve Neo4j kombinasyonu, karmaşık veri ilişkilerini hızlı bir şekilde yönetirken kolay geliştirme imkanı sağlar.
+```properties
+spring.neo4j.uri=bolt://localhost:7687
+spring.neo4j.authentication.username=neo4j
+spring.neo4j.authentication.password=your_password
+```
 
+## Running the Application
 
-## Katkı sağlayanlar
-- /hbykl
-- /z-muhammet
-- /oykuatakk
+Execute the application using Maven or the generated JAR file:
+
+```bash
+mvn spring-boot:run
+# or
+java -jar target/HospitalReport-0.0.1-SNAPSHOT.jar
+```
+
+Visit `http://localhost:8080/main` in your browser to access the web UI.
+
+## API Endpoints (Examples)
+
+- `GET /main` – list all persons
+- `GET /report/view/{id}` – view a person's report
+- `POST /report/createService` – create a person and report
+- `POST /report/updateService` – update an existing person
+
+## Testing
+
+Run all tests with Maven:
+
+```bash
+mvn test
+```
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
+This project currently does not include an open-source license.
